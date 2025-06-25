@@ -25,7 +25,6 @@ fn main() {
             }
 
             let file_contents = open_file(&args[2]);
-            println!("{:?}", file_contents);
             let mut executer = Executer::new(file_contents);
             executer.execute({|x| print!("{}", x)});
 

@@ -1,4 +1,6 @@
 use crate::executer::ExecutionError::{ExecutionError, ExecutionErrorDetails};
+use crate::util;
+
 macro_rules! nop { () => (); }
 
 pub struct Executer {
@@ -35,7 +37,9 @@ impl Executer {
 
         match first_symbol {
             '🎺' => {
-                self.output.push("Would print something now.".to_string());
+                let emoji_text = &line[4..];
+                let text = util::emoji_to_string::emoji_to_string(emoji_text.to_string());
+                self.output.push(text);
                 return None;
             }
             _ => { Some(ExecutionError::CommandNotFound(ExecutionErrorDetails::new(1, 0, 0)))}
@@ -65,13 +69,13 @@ mod tests {
         {
             let mut executer = Executer::new(vec!["🎺".to_string()]);
             executer.execute({|x| do_nothing(x) });
-            assert_eq!(executer.output, vec!["Would print something now."]);
+            assert_eq!(executer.output, vec![""]);
         }
 
         {
-            let mut executer = Executer::new(vec!["🎺".to_string(), "🎺".to_string()]);
+            let mut executer = Executer::new(vec!["🎺⚽️".to_string(), "🎺".to_string()]);
             executer.execute({|x| do_nothing(x) });
-            assert_eq!(executer.output, vec!["Would print something now.", "Would print something now."]);
+            assert_eq!(executer.output, vec!["s", ""]);
         }
     }
 
