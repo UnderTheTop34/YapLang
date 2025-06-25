@@ -1,7 +1,7 @@
-use crate::executer::ExecutionError::{ExecutionError, ExecutionErrorDetails};
-use crate::util;
+use unicode_segmentation::UnicodeSegmentation;
+use crate::executer::execution_error::{ExecutionError};
+use crate::executer::commands::{command::Command, print_fn::print_function};
 
-macro_rules! nop { () => (); }
 
 pub struct Executer {
     pub code: Vec<String>,
@@ -29,21 +29,29 @@ impl Executer {
     }
 
     fn execute_line(&mut self, line: String) -> Option<ExecutionError>{
-        if line.len() == 0{
+        let chars: Vec<&str> = UnicodeSegmentation::graphemes(line.as_str(), true).collect();
+        if chars.len() == 0{
             return None;
         }
 
-        let first_symbol = line.chars().nth(0).unwrap();
+        let first_symbol = chars[0];
 
-        match first_symbol {
-            '🎺' => {
-                let emoji_text = &line[4..];
-                let text = util::emoji_to_string::emoji_to_string(emoji_text.to_string());
-                self.output.push(text);
-                return None;
+        let command_list: Vec<Command> = vec![
+            print_function()
+        ];
+
+        // Loop over all commands to find the right one
+        for mut command in command_list {
+            if first_symbol == command.name{
+                // Execute said command & check for errors
+                if let Some(error) = command.execute(self, vec![chars[1..].join("")]){
+                    return Some(error);
+                }
+                break;
             }
-            _ => { Some(ExecutionError::CommandNotFound(ExecutionErrorDetails::new(1, 0, 0)))}
         }
+
+        None
     }
 }
 

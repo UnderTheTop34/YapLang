@@ -4,7 +4,6 @@ mod util;
 use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-use colorize;
 use crate::executer::executer::Executer;
 
 fn main() {
@@ -26,7 +25,7 @@ fn main() {
 
             let file_contents = open_file(&args[2]);
             let mut executer = Executer::new(file_contents);
-            executer.execute({|x| print!("{}", x)});
+            executer.execute(|x| print!("{}", x));
 
         }
 
