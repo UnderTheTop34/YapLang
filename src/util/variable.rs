@@ -1,5 +1,4 @@
 use std::cmp::PartialEq;
-use std::error::Error;
 use std::fmt::{Debug, Display};
 
 pub struct Variable {
@@ -41,8 +40,11 @@ impl Debug for Variable {
 
 pub enum VariableKind {
     String,
+    #[allow(dead_code)]
     Integer,
+    #[allow(dead_code)]
     Float,
+    #[allow(dead_code)]
     Boolean,
 }
 

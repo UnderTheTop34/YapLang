@@ -1,9 +1,8 @@
 use std::string::ToString;
 use unicode_segmentation::UnicodeSegmentation;
-use colorize;
 use crate::executer::commands::command::Command;
 use crate::util;
-use crate::util::variable::{Variable, VariableKind};
+use crate::util::variable::Variable;
 use crate::util::variable::VariableKind::String;
 
 pub fn make_string_function() -> Command {

@@ -3,14 +3,14 @@ use std::process::exit;
 use unicode_segmentation::UnicodeSegmentation;
 use colorize;
 use colorize::AnsiColor;
-use crate::util::emoji_to_string::{emoji_to_string, VARIABLE_SELECTOR_EMOJI};
+use crate::util::emoji_to_string::VARIABLE_SELECTOR_EMOJI;
 use crate::util::variable::Variable;
 
 pub fn replace_variables_in_emoji_strings(string: String, variables: HashMap<String, Variable>) -> String {
     let mut output = String::new();
     let mut current_var_name = String::new();
     let mut in_variable = false;
-    let mut uni_seperated_str: Vec<&str> = UnicodeSegmentation::graphemes(string.as_str(), true).collect();
+    let uni_seperated_str: Vec<&str> = UnicodeSegmentation::graphemes(string.as_str(), true).collect();
     for char in uni_seperated_str{
         if char == VARIABLE_SELECTOR_EMOJI{
             if in_variable {
