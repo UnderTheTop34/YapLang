@@ -1,4 +1,3 @@
-use std::string::ToString;
 use unicode_segmentation::UnicodeSegmentation;
 use crate::executer::commands::command::Command;
 use crate::util;

@@ -1,8 +1,12 @@
-use std::string::ToString;
 use emojis;
 use unicode_segmentation::UnicodeSegmentation;
 
 pub static UPPERCASE_EMOJI: &'static str = "📈";
+pub static NEWLINE_EMOJI: &'static str = "🍺";
+pub static EXCLAMATION_MARK_EMOJI: &'static str = "📣";
+pub static QUESTION_MARK_EMOJI: &'static str = "👀";
+pub static ARGUMENT_SEPERATOR_EMOJI: &'static str = "🦷";
+pub static VARIABLE_SELECTOR_EMOJI: &'static str = "💰";
 
 pub fn emoji_to_string(emoji_string: String) -> String {
     let mut output = String::new();
@@ -18,6 +22,31 @@ pub fn emoji_to_string(emoji_string: String) -> String {
             capatialize_next_char = true;
             continue;
         }
+
+        if emoji == NEWLINE_EMOJI {
+            if capatialize_next_char {
+                panic!("Can't make new line identifier uppercase.")
+            }
+            output.push('\n');
+            continue;
+        }
+
+        if emoji == EXCLAMATION_MARK_EMOJI {
+            if capatialize_next_char {
+                output += "!!!!!";
+            }
+            output.push('!');
+            continue;
+        }
+
+        if emoji == QUESTION_MARK_EMOJI {
+            if capatialize_next_char {
+                output += "?????";
+            }
+            output.push('?');
+            continue;
+        }
+
         if let Some(emoji) = emojis::get(&*emoji){
             if let Some(char) =  emoji.shortcode().unwrap().chars().nth(0){
                 let mut char = char;
@@ -44,6 +73,6 @@ mod tests {
     fn test_emoji_to_string() {
         assert_eq!(emoji_to_string("📦✈️🐍🥟🧚🐍🧚".to_string()), "pasdfsf".to_string());
         assert_eq!(emoji_to_string("📦✈️🐍🥟k🐍 ".to_string()), "pasdks ".to_string());
-        assert_eq!(emoji_to_string("📈📦📈✈️🐍📈🥟k🐍 ".to_string()), "PAsDks ".to_string());
+        assert_eq!(emoji_to_string("📈📦📈✈️🐍📈🥟k🐍 🍺".to_string()), "PAsDks \n".to_string());
     }
 }
