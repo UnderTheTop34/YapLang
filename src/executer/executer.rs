@@ -103,25 +103,25 @@ mod tests {
     fn test_line_execute(){
         {
             let mut executer = Executer::new(vec![]);
-            executer.execute({ |x| do_nothing(x) });
+            executer.execute(|x| do_nothing(x));
             assert_eq!(executer.output, Vec::<String>::new());
         }
 
 
         {
             let mut executer = Executer::new(vec!["🎺".to_string()]);
-            executer.execute({|x| do_nothing(x) });
+            executer.execute(|x| do_nothing(x));
             assert_eq!(executer.output, vec![""]);
         }
 
         {
             let mut executer = Executer::new(vec!["🎺⚽️".to_string(), "🎺".to_string()]);
-            executer.execute({|x| do_nothing(x) });
+            executer.execute(|x| do_nothing(x));
             assert_eq!(executer.output, vec!["s", ""]);
         }
     }
 
-    fn do_nothing(x: String) {
+    fn do_nothing(_x: String) {
 
     }
 }
