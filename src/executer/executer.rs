@@ -63,7 +63,6 @@ impl Executer {
 
         arguments.push(current_argument.join("").clone());
 
-        println!("Arguments: {:?}", arguments);
 
         // Loop over all commands to find the right one
         for mut command in command_list {

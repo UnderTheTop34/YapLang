@@ -1,5 +1,8 @@
 use emojis;
 use unicode_segmentation::UnicodeSegmentation;
+use colorize;
+use std::process::exit;
+use colorize::AnsiColor;
 
 pub static UPPERCASE_EMOJI: &'static str = "📈";
 pub static NEWLINE_EMOJI: &'static str = "🍺";
@@ -7,6 +10,7 @@ pub static EXCLAMATION_MARK_EMOJI: &'static str = "📣";
 pub static QUESTION_MARK_EMOJI: &'static str = "👀";
 pub static ARGUMENT_SEPERATOR_EMOJI: &'static str = "🦷";
 pub static VARIABLE_SELECTOR_EMOJI: &'static str = "💰";
+pub static SPACE_EMOJI: &'static str = "🛰";
 
 pub fn emoji_to_string(emoji_string: String) -> String {
     let mut output = String::new();
@@ -47,6 +51,17 @@ pub fn emoji_to_string(emoji_string: String) -> String {
             continue;
         }
 
+        if emoji == SPACE_EMOJI {
+            if capatialize_next_char {
+                let error = "Can't make space identifier uppercase.".red();
+                eprintln!("{}", error);
+                exit(103);
+            }
+
+            output.push(' ');
+            continue;
+        }
+
         if let Some(emoji) = emojis::get(&*emoji){
             if let Some(char) =  emoji.shortcode().unwrap().chars().nth(0){
                 let mut char = char;
@@ -61,6 +76,7 @@ pub fn emoji_to_string(emoji_string: String) -> String {
         // This can be done since continue exits the loop after the uppercase identifier.
         capatialize_next_char = false;
     }
+
 
     output
 }
