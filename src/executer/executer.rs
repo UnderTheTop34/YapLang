@@ -125,7 +125,5 @@ mod tests {
         }
     }
 
-    fn do_nothing(_x: String) {
-
-    }
+    fn do_nothing(_x: String) {}
 }
