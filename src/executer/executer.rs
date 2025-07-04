@@ -5,6 +5,7 @@ use crate::executer::commands::{command::Command, print_fn::print_function, pani
 use crate::util::variable::Variable;
 use crate::util::emoji_to_string::ARGUMENT_SEPERATOR_EMOJI;
 use crate::util::variable_replacer::replace_variables_in_emoji_strings;
+use crate::util::remove_comments::remove_comments;
 
 pub struct Executer {
     pub code: Vec<String>,
@@ -34,6 +35,8 @@ impl Executer {
     }
 
     fn execute_line(&mut self, line: String) -> Option<ExecutionError>{
+        let line = remove_comments(line);
+
         let chars: Vec<&str> = UnicodeSegmentation::graphemes(line.as_str(), true).collect();
         if chars.len() == 0{
             return None;

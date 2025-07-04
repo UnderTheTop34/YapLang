@@ -6,4 +6,5 @@ edition = "2024"
 [dependencies]
 colorize = "0.1.0"
 emojis = "0.7.0"
+rand = "0.9.1"
 unicode-segmentation = "1.12.0"

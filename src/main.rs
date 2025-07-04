@@ -5,6 +5,7 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use crate::executer::executer::Executer;
+use crate::util::remove_comments::remove_comments;
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
@@ -27,6 +28,17 @@ fn main() {
             let mut executer = Executer::new(file_contents);
             executer.execute(|x| print!("{}", x));
 
+        }
+
+        "rmc" /*rm comments*/ => {
+            if args.len() <= 2 {
+                println!("Missing argument - file required");
+                return;
+            }
+
+            let file_contents = open_file(&args[2]);
+            let n_file_contents = remove_comments(file_contents.join("\n"));
+            println!("{}", n_file_contents);
         }
 
         _ => print_help()
