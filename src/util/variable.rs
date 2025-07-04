@@ -6,17 +6,18 @@ pub struct Variable {
     pub kind: VariableKind,
     pub is_mutable: bool,
     pub scope: u16,
+    pub tracking_enabled: bool,
 }
 
 impl Variable {
     pub fn new(kind: VariableKind, scope: u16, is_mutable: bool, value: String) -> Self {
-        Variable { kind, scope, is_mutable, value }
+        Variable { kind, scope, is_mutable, value, tracking_enabled: false }
     }
 }
 
 impl Clone for Variable {
     fn clone(&self) -> Self {
-        Variable {kind: self.kind.clone(), scope: self.scope, is_mutable: self.is_mutable, value: self.value.clone()}
+        Variable {kind: self.kind.clone(), scope: self.scope, is_mutable: self.is_mutable, value: self.value.clone(), tracking_enabled: self.tracking_enabled}
     }
 }
 

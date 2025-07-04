@@ -8,7 +8,7 @@ use crate::executer::commands::command::Command;
 use crate::util;
 
 pub fn panic_function() -> Command {
-    Command::new("⚽️".to_string(), 1, {|_, args |
+    Command::new("⚽️"/*I hate soccer*/.to_string(), 1, {|_, args |
         {
             let chars: Vec<&str> = UnicodeSegmentation::graphemes(args[0].as_str(), true).collect();
             let mut text = util::emoji_to_string::emoji_to_string(chars.join("").to_string());

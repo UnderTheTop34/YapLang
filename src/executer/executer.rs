@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use unicode_segmentation::UnicodeSegmentation;
 use crate::executer::execution_error::{ExecutionError};
-use crate::executer::commands::{command::Command, print_fn::print_function, panic_fn::panic_function, mkstr_fn::make_string_function};
+use crate::executer::commands::{command::Command, print_fn::print_function, panic_fn::panic_function, mkstr_fn::make_string_function, valc_fn::valc_function};
 use crate::util::variable::Variable;
 use crate::util::emoji_to_string::ARGUMENT_SEPERATOR_EMOJI;
 use crate::util::variable_replacer::replace_variables_in_emoji_strings;
@@ -44,7 +44,9 @@ impl Executer {
         let command_list: Vec<Command> = vec![
             print_function(),
             panic_function(),
-            make_string_function()
+            make_string_function(),
+            valc_function(),
+
         ];
 
 

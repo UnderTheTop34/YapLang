@@ -1,16 +1,25 @@
 use std::string::ToString;
 use unicode_segmentation::UnicodeSegmentation;
+use std::eprintln;
+use std::process::exit;
 use crate::executer::commands::command::Command;
 use crate::util;
 use crate::util::variable::Variable;
 use crate::util::variable::VariableKind::String;
 
 pub fn make_string_function() -> Command {
-    Command::new("🧵".to_string(), 2, {|exec, args |
+    Command::new("🧵"/*It's a string*/.to_string(), 2, {|exec, args |
         {
             let name = args[0].to_string();
             let chars: Vec<&str> = UnicodeSegmentation::graphemes(args[1].as_str(), true).collect();
             let str_value = util::emoji_to_string::emoji_to_string(chars.join("").to_string());
+
+            if exec.variables.get(name.clone().as_str()).is_some() {
+                eprintln!("Can't create another variable named {}", name);
+                eprintln!("{} already exists", name);
+                exit(109);
+            }
+
             exec.variables.insert(name, Variable::new(String, exec.current_scope, true, str_value));
             return None;
         }

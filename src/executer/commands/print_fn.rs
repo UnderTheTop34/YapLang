@@ -3,7 +3,7 @@ use crate::executer::commands::command::Command;
 use crate::util;
 
 pub fn print_function() -> Command {
-    Command::new("🎺".to_string(), 1, {|executer, args |
+    Command::new("🎺"/*makes noise, yeah, can't explain this really*/.to_string(), 1, {|executer, args |
         {
             let chars: Vec<&str> = UnicodeSegmentation::graphemes(args[0].as_str(), true).collect();
             let text = util::emoji_to_string::emoji_to_string(chars.join("").to_string());
